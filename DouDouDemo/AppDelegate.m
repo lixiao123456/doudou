@@ -7,17 +7,30 @@
 //
 
 #import "AppDelegate.h"
-
-@interface AppDelegate ()
-
+#import "LinkPageViewController.h"
+#import "MainViewController.h"
+@interface AppDelegate ()<LinkPageViewControllerDelegate>
+@property (nonatomic,strong)LinkPageViewController *vc_linePage;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    self.vc_linePage = [[LinkPageViewController alloc]initWithImageArray:@[@"linkPage_one",@"linkPage_two",@"linkPage_three",@"linkPage_four"]];
+    self.vc_linePage.delegate = self;
+    [self.window addSubview:self.vc_linePage.view];
     // Override point for customization after application launch.
     return YES;
+}
+
+- (void)enterMainViewController{
+    [self.vc_linePage.view removeFromSuperview];
+    MainViewController *vc = [[MainViewController alloc]init];
+    [self.window setRootViewController:vc];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
